@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 
 public class InsertBlog extends javax.swing.JFrame {
 
-    private PersonalBlog pers;
     private Database da;
+    private PersonalBlog pers;
     private String sql;
     
     public InsertBlog(PersonalBlog pers) {

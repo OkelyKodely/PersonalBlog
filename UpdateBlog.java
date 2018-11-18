@@ -8,11 +8,11 @@ import javax.swing.JFrame;
 public class UpdateBlog extends javax.swing.JFrame {
 
     private PersonalBlog pers;
-    private Database da;
     private String sql;
     private String email;
     private String title;
     private String entry;
+    private Database da;
     
     public UpdateBlog(PersonalBlog pers, String email, String title, String entry) {
         this.pers = pers;
