@@ -19,6 +19,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,6 +35,8 @@ public class PersonalBlog extends javax.swing.JFrame {
     
     private JButton add, modify;
     private JButton put, pull;
+    
+    private JButton leave;
     
     private JScrollPane jScrollPane1;
     private JList blogListing;
@@ -51,7 +54,11 @@ public class PersonalBlog extends javax.swing.JFrame {
     }
     
     private void initDa() {
-        da = new Database();
+        try {
+            da = new Database();
+        } catch(SQLException exce) {
+            System.exit(0);
+        }
     }
     
     private void setComponents() {
@@ -92,6 +99,33 @@ public class PersonalBlog extends javax.swing.JFrame {
         modify.setBounds(200, 300, 90, 25);
         modify.setText("modify");
         this.ip.add(modify);
+        leave = new JButton();
+        leave.setBounds(10, 480, 860, 75);
+        leave.setFont(new Font("arial", Font.BOLD, 46));
+        leave.setText("Leave");
+        leave.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        this.ip.add(leave);
         personall = new JLabel();
         personall.setBounds(440, 70, 100, 25);
         personall.setText("Personal");
@@ -221,15 +255,17 @@ public class PersonalBlog extends javax.swing.JFrame {
                 Object s = blogListing.getSelectedValue();
                 String[] ss = (String[]) s;
                 ss[1] = ss[1].trim();
-                Database da = new Database();
-                ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + ss[1] + "'");
                 try {
+                    Database da = new Database();
+                    ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + ss[1] + "'");
                     if(res.next()) {
                         setEntry(res.getString("post"));
                         PersonalBlog.this.titleSelected.setText(res.getString("title"));
                         PersonalBlog.this.emailSelected.setText("|" + res.getString("email"));
                     }
-                } catch(SQLException exc) {}
+                } catch(SQLException exc) {
+                    System.exit(0);
+                }
             }
             public void mousePressed(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
@@ -400,6 +436,18 @@ public class PersonalBlog extends javax.swing.JFrame {
             super.paintComponent(g);
             g.drawImage(image, 0,0, this);
         }
+    }
+    
+    public void sendMessage_ForClose(String message) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(1);
+                    JOptionPane.showMessageDialog(null, message);
+                } catch(InterruptedException exce) {}
+            }
+        };
+        t.start();
     }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables

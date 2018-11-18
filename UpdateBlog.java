@@ -8,15 +8,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import data.Database;
+import java.sql.SQLException;
 
 public class UpdateBlog extends javax.swing.JFrame {
 
     private PersonalBlog pers;
+    private Database da;
     private String sql;
     private String email;
     private String title;
     private String entry;
-    private Database da;
     
     public UpdateBlog(PersonalBlog pers, String email, String title, String entry) {
         this.pers = pers;
@@ -35,19 +36,22 @@ public class UpdateBlog extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(UpdateBlog.this.pers != null) {
-                    da = new Database();
-                    String email;
-                    String name;
-                    String post;
-                    email = insertEmail.getText();
-                    name = insertName.getText();
-                    post = insertPost.getText();
-                    sql = "UPDATE blog SET email = '" + email + "', title = '" + name + "', post = '" + post + "' WHERE title = '" + title + "'";
-                    da.command(sql);
-                    da.closeConnect();
-                    UpdateBlog.this.pers.setEntry(post);
-                    UpdateBlog.this.pers.db();
-                    UpdateBlog.this.dispose();
+                    try {
+                        da = new Database();
+                        String email;
+                        String name;
+                        String post;
+                        email = insertEmail.getText();
+                        name = insertName.getText();
+                        post = insertPost.getText();
+                        sql = "UPDATE blog SET email = '" + email + "', title = '" + name + "', post = '" + post + "' WHERE title = '" + title + "'";
+                        da.command(sql);
+                        da.closeConnect();
+                        UpdateBlog.this.pers.setEntry(post);
+                        UpdateBlog.this.pers.db();
+                        UpdateBlog.this.pers.sendMessage_ForClose("Updated my personal blog finished");
+                        UpdateBlog.this.dispose();
+                    } catch (SQLException sQLException) {}
                 }
             }
 

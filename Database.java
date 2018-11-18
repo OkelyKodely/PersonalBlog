@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class Database {
  
@@ -12,11 +13,14 @@ public class Database {
     private String data;
     private boolean isClosed;
     
-    public Database() {
+    public Database() throws SQLException {
         try {
             Class.forName("org.postgresql.Driver");
         } catch(Exception e) {}
         this.con = initConnect(null);
+        if(this.con == null) {
+            throw new SQLException();
+        }
     }
     
     private Connection initConnect(String data) {
@@ -34,7 +38,10 @@ public class Database {
             String url = "jdbc:postgresql://" + hostName + "/" + this.data + "?user=" + userName + "&password=" + password + "&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
             Connection connection = DriverManager.getConnection(url, userName, password);
             return connection;
-        } catch(Exception e) {return null;}
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "No Internet");
+        }
+        return null;
     }
 
     public void setDatabase(String data) {

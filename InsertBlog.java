@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,18 +27,21 @@ public class InsertBlog extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if(InsertBlog.this.pers != null) {
-                    da = new Database();
-                    String email;
-                    String name;
-                    String post;
-                    email = insertEmail.getText();
-                    name = insertName.getText();
-                    post = insertPost.getText();
-                    sql = "INSERT INTO blog (email, title, post, inputdate) VALUES ('" + email + "','" + name + "','" + post + "',current_timestamp)";
-                    da.command(sql);
-                    da.closeConnect();
-                    InsertBlog.this.pers.db();
-                    InsertBlog.this.dispose();
+                    try {
+                        da = new Database();
+                        String email;
+                        String name;
+                        String post;
+                        email = insertEmail.getText();
+                        name = insertName.getText();
+                        post = insertPost.getText();
+                        sql = "INSERT INTO blog (email, title, post, inputdate) VALUES ('" + email + "','" + name + "','" + post + "',current_timestamp)";
+                        da.command(sql);
+                        da.closeConnect();
+                        InsertBlog.this.pers.db();
+                        InsertBlog.this.pers.sendMessage_ForClose("New entry to my personal blog finished");
+                        InsertBlog.this.dispose();
+                    } catch (SQLException sQLException) {}
                 }
             }
 
