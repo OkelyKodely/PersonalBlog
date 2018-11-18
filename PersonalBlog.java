@@ -6,21 +6,19 @@
 package ui;
 
 import data.Database;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.ComponentOrientation;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,10 +27,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.border.BevelBorder;
 
 public class PersonalBlog extends javax.swing.JFrame {
 
@@ -40,7 +36,7 @@ public class PersonalBlog extends javax.swing.JFrame {
     private ImagePanel ip;
 
     private JTextArea entry;
-    private JLabel personall, blogg;
+    private JLabel personall, blogg, inswingg;
     private JLabel header;
     
     private JButton add, modify;
@@ -49,12 +45,14 @@ public class PersonalBlog extends javax.swing.JFrame {
     private JScrollPane jScrollPane1;
     private JList blogListing;
     
+    private JLabel titleSelected;
+    private JLabel emailSelected;
+    
     /**
      * Creates new form PersonalBlog
      */
     public PersonalBlog() {
         initComponents();
-        setBackground();
         setComponents();
         setInsertPost();
         setModifyPost();
@@ -62,23 +60,41 @@ public class PersonalBlog extends javax.swing.JFrame {
     }
     
     private void setComponents() {
+        try {
+            Image image = ImageIO.read(new File("bg.png"));
+            this.ip = new ImagePanel(image);
+            this.ip.setBounds(0, 0, 877, 559);
+            this.add(this.ip);
+        } catch(Exception exce) {}
         this.setLayout(null);
+        this.setResizable(false);
+        this.setBackground(Color.WHITE);
+        this.ip.setBackground(Color.WHITE);
         this.ip.setLayout(null);
+        emailSelected = new JLabel();
+        emailSelected.setBounds(245, 255, 400, 50);
+        emailSelected.setFont(new Font("arial", Font.ITALIC, 12));
+        this.ip.add(emailSelected);
+        titleSelected = new JLabel();
+        titleSelected.setBounds(25, 255, 400, 50);
+        titleSelected.setFont(new Font("arial", Font.ITALIC, 12));
+        this.ip.add(titleSelected);
         header = new JLabel();
-        header.setBounds(20, 20, 400, 50);
+        header.setBounds(20, 360, 400, 50);
         header.setFont(new Font("arial", Font.BOLD, 36));
         header.setText("Personal Blog in Swing");
         this.ip.add(header);
         entry = new JTextArea();
         entry.setBounds(20, 70, 400, 200);
         entry.setLineWrap(true);
+        entry.setBorder(new BevelBorder(BevelBorder.LOWERED));
         this.ip.add(entry);
         add = new JButton();
-        add.setBounds(140, 300, 50, 25);
+        add.setBounds(140, 300, 70, 25);
         add.setText("add");
         this.ip.add(add);
         modify = new JButton();
-        modify.setBounds(200, 300, 70, 25);
+        modify.setBounds(200, 300, 90, 25);
         modify.setText("modify");
         this.ip.add(modify);
         personall = new JLabel();
@@ -89,29 +105,25 @@ public class PersonalBlog extends javax.swing.JFrame {
         blogg.setBounds(480, 95, 100, 25);
         blogg.setText("Blog");
         this.ip.add(blogg);
+        inswingg = new JLabel();
+        inswingg.setBounds(490, 120, 100, 25);
+        inswingg.setText("in Swing");
+        this.ip.add(inswingg);
         put = new JButton();
-        put.setBounds(470, 180, 40, 25);
+        put.setBounds(440, 180, 60, 25);
         put.setText("<");
         this.ip.add(put);
         pull = new JButton();
-        pull.setBounds(510, 180, 40, 25);
+        pull.setBounds(510, 180, 60, 25);
         pull.setText(">");
         this.ip.add(pull);
         blogListing = new JList();
-        blogListing.setBounds(580, 70, 250, 400);
+        blogListing.setBounds(580, 70, 290, 400);
         this.ip.add(blogListing);
         jScrollPane1 = new JScrollPane(blogListing);
-        jScrollPane1.setBounds(580, 70, 250, 400);
+        jScrollPane1.setBounds(580, 70, 290, 400);
+        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.ip.add(jScrollPane1);
-    }
-    
-    private void setBackground() {
-        try {
-            Image image = ImageIO.read(new File("bg.png"));
-            this.ip = new ImagePanel(image);
-            this.ip.setBounds(0, 0, 856, 559);
-            this.add(this.ip);
-        } catch(Exception exce) {}
     }
 
      /**
@@ -124,17 +136,17 @@ public class PersonalBlog extends javax.swing.JFrame {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(856, 559));
+        setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 856, Short.MAX_VALUE)
+            .addGap(0, 867, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 559, Short.MAX_VALUE)
+            .addGap(0, 554, Short.MAX_VALUE)
         );
 
         pack();
@@ -210,9 +222,7 @@ public class PersonalBlog extends javax.swing.JFrame {
             int i = 0;
             while(res.next()) {
                 listModel.addElement(res.getString("inputdate"));
-                System.out.println(listModel.getElementAt(i));
                 listModel2.addElement(res.getString("title"));
-                System.out.println(listModel2.getElementAt(i));
                 i++;
             }
         } catch(SQLException exc) {}
@@ -220,11 +230,14 @@ public class PersonalBlog extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 Object s = blogListing.getSelectedValue();
                 String[] ss = (String[]) s;
+                ss[1] = ss[1].trim();
                 Database da = new Database();
-                ResultSet res = da.query("SELECT post FROM blog WHERE title = '" + ss[1] + "'");
+                ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + ss[1] + "'");
                 try {
                     if(res.next()) {
                         setEntry(res.getString("post"));
+                        PersonalBlog.this.titleSelected.setText(res.getString("title"));
+                        PersonalBlog.this.emailSelected.setText("|" + res.getString("email"));
                     }
                 } catch(SQLException exc) {}
             }
@@ -245,29 +258,53 @@ public class PersonalBlog extends javax.swing.JFrame {
         String[][] columnData;
         columnData = new String[listModel2.size()][2];
         for(int i = 0; i < listModel.getSize(); i++) {
+            String spaces;
+            spaces = "";
+            for(int j = 0; j < 1200 - listModel2.get(i).length(); j++) {
+                spaces += " ";
+            }
             columnData[i][0] = listModel.get(i);
-            columnData[i][1] = listModel2.get(i);
+            columnData[i][1] = listModel2.get(i) + spaces;
         }
         blogListing.setListData(columnData);
         blogListing.setCellRenderer(new MyCellRenderer());
     }
     
-    static class MyCellRenderer extends JPanel implements ListCellRenderer{
-        JLabel left, right;
-        MyCellRenderer() {
-           //setLayout(new GridLayout(1, 2));
-           left      = new JLabel();
-           right      = new JLabel();
-           add(left);
-           add(right);
+    public class MyCellRenderer extends JPanel implements ListCellRenderer {
+
+        private JLabel image, left, right;
+
+        private MyCellRenderer() {
+            setAlignmentX(0);
+            
+            image    = new JLabel();
+            left      = new JLabel();
+            right      = new JLabel();
+            add(image);
+            add(left);
+            add(right);
         }
 
         public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){
-           String leftData      = ((String[])value)[0];
-           String rightData      = ((String[])value)[1];
-           left.setText(leftData);
-           right.setText(rightData);
-           return this;
+            try {
+                Image i = ImageIO.read(new File("missile.png"));
+                ImageIcon imageMap = new ImageIcon(i);
+                image.setIcon(imageMap);
+                image.setHorizontalTextPosition(JLabel.RIGHT);
+                image.setText("");
+                String leftData      = ((String[])value)[0];
+                String rightData      = ((String[])value)[1];
+                left.setText(leftData);
+                right.setText(rightData);
+                if (isSelected) {
+                    setBackground(list.getSelectionBackground());
+                    setForeground(list.getSelectionForeground());
+                } else {
+                    setBackground(list.getBackground());
+                    setForeground(list.getForeground());
+                }
+            } catch(Exception exce) {}
+            return this;
         }
     }
 
@@ -275,28 +312,6 @@ public class PersonalBlog extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PersonalBlog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PersonalBlog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PersonalBlog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PersonalBlog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

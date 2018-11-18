@@ -3,6 +3,7 @@ package ui;
 import data.Database;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JFrame;
 
 public class UpdateBlog extends javax.swing.JFrame {
 
@@ -54,6 +55,7 @@ public class UpdateBlog extends javax.swing.JFrame {
 
             public void mouseExited(MouseEvent e) {}
         });
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +76,7 @@ public class UpdateBlog extends javax.swing.JFrame {
         save.setText("Update");
 
         insertPost.setColumns(20);
+        insertPost.setLineWrap(true);
         insertPost.setRows(5);
         jScrollPane1.setViewportView(insertPost);
 
