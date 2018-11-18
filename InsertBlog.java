@@ -3,7 +3,11 @@ package ui;
 import data.Database;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class InsertBlog extends javax.swing.JFrame {
 
@@ -46,6 +50,32 @@ public class InsertBlog extends javax.swing.JFrame {
             public void mouseExited(MouseEvent e) {}
         });
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        try {
+            JLabel do1 = new JLabel();
+            do1.setBounds(10, 30, 50, 20);
+            JLabel do2 = new JLabel();
+            do2.setBounds(175, 30, 50, 20);
+            JLabel do3 = new JLabel();
+            do3.setBounds(10, 230, 50, 20);
+            JLabel do4 = new JLabel();
+            do4.setBounds(10, 270, 50, 20);
+            java.awt.Image i1 = javax.imageio.ImageIO.read(new File("do1.jpg"));
+            java.awt.Image i2 = javax.imageio.ImageIO.read(new File("do2.jpg"));
+            java.awt.Image i3 = javax.imageio.ImageIO.read(new File("do3.jpg"));
+            java.awt.Image i4 = javax.imageio.ImageIO.read(new File("do4.jpg"));
+            ImageIcon ii1 = new ImageIcon(i1);
+            ImageIcon ii2 = new ImageIcon(i2);
+            ImageIcon ii3 = new ImageIcon(i3);
+            ImageIcon ii4 = new ImageIcon(i4);
+            do1.setIcon(ii1);
+            do2.setIcon(ii2);
+            do3.setIcon(ii3);
+            do4.setIcon(ii4);
+            this.add(do1);
+            this.add(do2);
+            this.add(do3);
+            this.add(do4);
+        } catch (IOException exce) {}
     }
 
     @SuppressWarnings("unchecked")
@@ -83,20 +113,26 @@ public class InsertBlog extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(insertName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(insertEmail))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(post)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 58, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(insertName, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61)
+                                .addComponent(insertEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(post)
+                                    .addGap(267, 267, 267))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
