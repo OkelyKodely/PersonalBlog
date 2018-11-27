@@ -7,22 +7,32 @@ import java.awt.event.MouseListener;
 import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.File;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 public class PersonalBlog extends javax.swing.JFrame {
@@ -32,7 +42,7 @@ public class PersonalBlog extends javax.swing.JFrame {
 
     private JTextArea entry;
     private JScrollPane jScrollPane0;
-    private JLabel personall, blogg, inswingg;
+    private JLabel personall, blogg, personll, bogg, inswingg;
     private JLabel header;
     
     private JButton add, modify;
@@ -41,11 +51,39 @@ public class PersonalBlog extends javax.swing.JFrame {
     private JButton leave;
     
     private JScrollPane jScrollPane1;
-    private JList blogListing;
+    private JJList blogListing;
     
     private JLabel titleSelected;
     private JLabel emailSelected;
     
+    private class JJList extends JList {
+        private JJList() {
+            MouseListener[] ml = getMouseListeners();
+            for (MouseListener l : ml)
+                removeMouseListener(l);
+            addMouseListener(new MouseAdapter()
+            {
+              @Override
+              public void mouseClicked(MouseEvent event)
+              {
+              }
+            });
+        }
+        private JJList(DefaultListModel ll) {
+            setModel(ll);
+            MouseListener[] ml = getMouseListeners();
+            for (MouseListener l : ml)
+                removeMouseListener(l);
+            addMouseListener(new MouseAdapter()
+            {
+              @Override
+              public void mouseClicked(MouseEvent event)
+              {
+              }
+            });
+        }
+    }
+
     public PersonalBlog() {
         initDa();
         initComponents();
@@ -76,43 +114,45 @@ public class PersonalBlog extends javax.swing.JFrame {
         this.ip.setBackground(Color.WHITE);
         this.ip.setLayout(null);
         titleSelected = new JLabel();
-        titleSelected.setForeground(Color.YELLOW);
+        titleSelected.setForeground(Color.lightGray);
         titleSelected.setBounds(25, 280, 400, 50);
         titleSelected.setFont(new Font("verdana", Font.BOLD, 12));
         this.ip.add(titleSelected);
-        this.addWindowListener(getWindowAdapter());
+
         emailSelected = new JLabel();
-        emailSelected.setForeground(Color.YELLOW);
+        emailSelected.setForeground(Color.WHITE);
         emailSelected.setBounds(245, 280, 400, 50);
         emailSelected.setFont(new Font("arial", Font.ITALIC, 12));
         this.ip.add(emailSelected);
         header = new JLabel();
-        header.setForeground(Color.YELLOW);
+        header.setForeground(Color.RED);
         header.setBounds(20, 360, 400, 50);
         header.setFont(new Font("arial", Font.BOLD, 36));
-        header.setText("Personal Blog");
+        header.setText("Personal Blog ..");
         this.ip.add(header);
         entry = new JTextArea();
-        entry.setForeground(Color.YELLOW);
+        entry.setForeground(Color.WHITE);
         entry.setText(" ");
         entry.setCaretPosition(0);
-        entry.setBackground(Color.RED);
+        entry.setBackground(Color.LIGHT_GRAY);
         entry.setBounds(20, 70, 400, 200);
         entry.setLineWrap(true);
         entry.setBorder(new BevelBorder(BevelBorder.LOWERED));
         jScrollPane0 = new JScrollPane(entry);
         jScrollPane0.setBounds(20, 70, 300, 200);
-        jScrollPane0.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane0.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.ip.add(jScrollPane0);
         add = new JButton();
-        add.setForeground(Color.RED);
+        add.setForeground(Color.CYAN);
         add.setBounds(20, 274, 70, 25);
         add.setText("add");
+        add.setFont(new Font("helvetica", Font.BOLD, 11));
         this.ip.add(add);
         modify = new JButton();
-        modify.setForeground(Color.RED);
+        modify.setForeground(Color.CYAN);
         modify.setBounds(91, 274, 90, 25);
         modify.setText("modify");
+        modify.setFont(new Font("helvetica", Font.BOLD, 11));
         this.ip.add(modify);
         leave = new JButton();
         leave.setForeground(new Color(255, 255, 255));
@@ -143,19 +183,31 @@ public class PersonalBlog extends javax.swing.JFrame {
         });
         this.ip.add(leave);
         personall = new JLabel();
-        personall.setForeground(Color.YELLOW);
+        personall.setForeground(Color.RED);
         personall.setFont(new Font("arial", Font.PLAIN, 20));
         personall.setBounds(330, 70, 100, 25);
         personall.setText("Personal");
         this.ip.add(personall);
         blogg = new JLabel();
-        blogg.setForeground(Color.YELLOW);
+        blogg.setForeground(Color.RED);
         blogg.setFont(new Font("arial", Font.PLAIN, 20));
         blogg.setBounds(420, 110, 100, 25);
         blogg.setText("Blog");
         this.ip.add(blogg);
+        personll = new JLabel();
+        personll.setForeground(Color.RED);
+        personll.setFont(new Font("arial", Font.PLAIN, 20));
+        personll.setBounds(330, 170, 100, 25);
+        personll.setText("Personal");
+        this.ip.add(personll);
+        bogg = new JLabel();
+        bogg.setForeground(Color.RED);
+        bogg.setFont(new Font("arial", Font.PLAIN, 20));
+        bogg.setBounds(420, 210, 100, 25);
+        bogg.setText("Blog ..");
+        this.ip.add(bogg);
         inswingg = new JLabel();
-        inswingg.setForeground(Color.YELLOW);
+        inswingg.setForeground(Color.RED);
         inswingg.setFont(new Font("arial", Font.PLAIN, 20));
         inswingg.setBounds(380, 120, 100, 25);
         inswingg.setText("");
@@ -163,18 +215,30 @@ public class PersonalBlog extends javax.swing.JFrame {
         put = new JButton();
         put.setBounds(341, 150, 60, 25);
         put.setText("<");
-        this.ip.add(put);
+        //this.ip.add(put);
         pull = new JButton();
         pull.setBounds(404, 150, 60, 25);
         pull.setText(">");
-        this.ip.add(pull);
-        blogListing = new JList();
+        //this.ip.add(pull);
+        blogListing = new JJList();
+
+        DefaultListCellRenderer renderer = (DefaultListCellRenderer) blogListing.getCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.LEFT);
         blogListing.setBackground(Color.RED);
         blogListing.setBounds(480, 70, 390, 400);
         this.ip.add(blogListing);
+        blogListing.setEnabled(true);
         jScrollPane1 = new JScrollPane(blogListing);
+        jScrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        final JScrollBar scrollBar = jScrollPane1.getVerticalScrollBar();
+        scrollBar.addAdjustmentListener(new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                //System.out.println("JScrollBar's current value = " + scrollBar.getValue());
+            }
+        });
         jScrollPane1.setBounds(480, 70, 390, 400);
-        jScrollPane1.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.ip.add(jScrollPane1);
     }
 
@@ -266,61 +330,167 @@ public class PersonalBlog extends javax.swing.JFrame {
             t.start();
         } catch(InterruptedException exc) {}
     }
-    
+
     public void db() {
-        da.query("SELECT inputdate FROM blog");
         ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        DefaultListModel<String> listModel2 = new DefaultListModel<>();
         try {
             int i = 0;
             while(res.next()) {
-                listModel.addElement(res.getString("inputdate"));
-                listModel2.addElement(res.getString("title"));
-                i++;
+                try {
+                    String spaces = "";
+                    for(int j=0; j<20; j++)
+                        spaces += " ";
+                    listModel.add(i, res.getString("title") + spaces);
+                    i++;
+                } catch(Exception e) {}
             }
         } catch(SQLException exc) {}
+        blogListing.setModel(listModel);
+        blogListing.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    System.out.println(e.getX()+"");
+                    if(e.getX() > 230) {
+                        blogListing.setModel(listModel);
+                        System.out.println("Recoqnizedt, a button click...");
+                        int index = blogListing.locationToIndex(e.getPoint());
+                        String item = (String) blogListing.getModel().getElementAt(index);
+                        String sql = "DELETE FROM blog WHERE title = '" + item.trim() + "'";
+                        Database db = new Database();
+                        db.command(sql);
+                        try {
+                            ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
+                            DefaultListModel<String> listModel = new DefaultListModel<>();
+                            try {
+                                int i = 0;
+                                while(res.next()) {
+                                    String spaces = "";
+                                    for(int j=0; j<20; j++)
+                                        spaces += " ";
+                                    listModel.add(i, res.getString("title") + spaces);
+                                    i++;
+                                }
+                            } catch(SQLException exce) {}
+                            blogListing.setModel(listModel);
+                            JButton[] rem = new JButton[1];
+                            try {
+                                for(int i=0; i<blogListing.getModel().getSize(); i++) {
+                                    Image i1 = ImageIO.read(new File("x.png"));
+                                    ImageIcon imageMap1 = new ImageIcon(i1);
+                                    rem[i] = new JButton();
+                                    rem[i].setBackground(Color.WHITE);
+                                    rem[i].setBounds(0, 0, 40, 30);
+                                    rem[i].setIcon(imageMap1);
+                                    rem[i].addMouseListener(new MouseListener() {
+                                        public void mouseClicked(MouseEvent e) {
+                                        }
+                                        public void mouseExited(MouseEvent e) {
+                                        }
+                                        public void mouseEntered(MouseEvent e) {
+                                        }
+                                        public void mousePressed(MouseEvent e) {
+                                        }
+                                        public void mouseReleased(MouseEvent e) {
+                                        }
+                                    });
+                                }
+                            } catch(Exception exce) {}
+                            JListCellRenderer r = new JListCellRenderer();
+                            r.setRem(rem);
+                            blogListing.setCellRenderer(r);
+                            blogListing.setForeground(Color.RED);
+                            blogListing.setBackground(Color.WHITE);
+                        } catch(Exception e0) {}
+                        db.closeConnect();
+                    } else {
+                        int index = blogListing.locationToIndex(e.getPoint());
+                        String item = (String) blogListing.getModel().getElementAt(index);
+                        try {
+                            Database da = new Database();
+                            ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + item.trim() + "' order by id asc");
+                            if(res.next()) {
+
+                                setEntry(res.getString("post"));
+                                PersonalBlog.this.titleSelected.setText(res.getString("title"));
+                                PersonalBlog.this.emailSelected.setText("|" + res.getString("email"));
+                            }
+                            da.closeConnect();
+                        } catch(SQLException exce) {}
+                    }
+                } catch(SQLException exce) {}
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
+        JButton[] rem = new JButton[1];
+        try {
+            for(int i=0; i<blogListing.getModel().getSize(); i++) {
+                Image i1 = ImageIO.read(new File("x.png"));
+                ImageIcon imageMap1 = new ImageIcon(i1);
+                rem[i] = new JButton();
+                rem[i].setBackground(Color.WHITE);
+                rem[i].setBounds(0, 0, 40, 30);
+                rem[i].setIcon(imageMap1);
+                rem[i].addMouseListener(new MouseListener() {
+                    public void mouseClicked(MouseEvent e) {
+                    }
+                    public void mouseExited(MouseEvent e) {
+                    }
+                    public void mouseEntered(MouseEvent e) {
+                    }
+                    public void mousePressed(MouseEvent e) {
+                    }
+                    public void mouseReleased(MouseEvent e) {
+                    }
+                });
+            }
+        } catch(Exception e) {}
+        JListCellRenderer r = new JListCellRenderer();
+        r.setRem(rem);
+        blogListing.setCellRenderer(r);
         put.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
-                Object s = blogListing.getSelectedValue();
-                String[] ss = (String[]) s;
-                ss[1] = ss[1].trim();
+                if(1==1)
+                return;
+                int index = blogListing.locationToIndex(e.getPoint());
+                String item = (String) blogListing.getModel().getElementAt(index);
                 try {
                     Database da = new Database();
-                    ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + ss[1].replaceAll("_", "") + "'");
+                    ResultSet res = da.query("SELECT post, title, email FROM blog WHERE title = '" + item.trim() + "' order by id asc");
                     if(res.next()) {
+
                         setEntry(res.getString("post"));
                         PersonalBlog.this.titleSelected.setText(res.getString("title"));
                         PersonalBlog.this.emailSelected.setText("|" + res.getString("email"));
 
-                        da.query("SELECT inputdate FROM blog");
                         res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
                         DefaultListModel<String> listModel = new DefaultListModel<>();
-                        DefaultListModel<String> listModel2 = new DefaultListModel<>();
                         try {
                             int i = 0;
                             while(res.next()) {
-                                listModel.addElement(res.getString("inputdate"));
-                                listModel2.addElement(res.getString("title"));
+                                String spaces = "";
+                                for(int j=0; j<20; j++)
+                                    spaces += " ";
+                                listModel.add(i, res.getString("title") + spaces);
                                 i++;
                             }
                         } catch(SQLException exc) {}
-                        String[][] columnData;
-                        columnData = new String[listModel2.size()][2];
-                        for(int i = 0; i < listModel.getSize(); i++) {
-                            String spaces;
-                            spaces = "";
-                            for(int j = 0; j < 1200 - listModel2.get(i).length(); j++) {
-                                spaces += "_";
-                            }
-                            columnData[i][0] = listModel.get(i);
-                            columnData[i][1] = listModel2.get(i) + spaces;
-                        }
                         ip = getContentPanel(GridBagConstraints.WEST);
-                        blogListing.setListData(columnData);
-                        blogListing.setCellRenderer(new JListCellRenderer());
-                        blogListing.setForeground(Color.YELLOW);
-                        blogListing.setBackground(new Color(13, 99, 54));
+                        blogListing.setModel(listModel);
+                        blogListing.setForeground(Color.RED);
+                        blogListing.setBackground(Color.WHITE);
                         
                     }
                 } catch(SQLException exc) {
@@ -334,6 +504,8 @@ public class PersonalBlog extends javax.swing.JFrame {
         });
         pull.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
+                if(1==1)
+                return;
                 setEntry("");
             }
             public void mousePressed(MouseEvent e) {}
@@ -341,22 +513,9 @@ public class PersonalBlog extends javax.swing.JFrame {
             public void mouseEntered(MouseEvent e) {}
             public void mouseExited(MouseEvent e) {}
         });
-        String[][] columnData;
-        columnData = new String[listModel2.size()][2];
-        for(int i = 0; i < listModel.getSize(); i++) {
-            String spaces;
-            spaces = "";
-            for(int j = 0; j < 1200 - listModel2.get(i).length(); j++) {
-                spaces += "_";
-            }
-            columnData[i][0] = listModel.get(i);
-            columnData[i][1] = listModel2.get(i) + spaces;
-        }
         ip = getContentPanel(GridBagConstraints.WEST);
-        blogListing.setListData(columnData);
-        blogListing.setCellRenderer(new JListCellRenderer());
         blogListing.setForeground(new Color(138, 138, 138));
-        blogListing.setBackground(new Color(13, 99, 54));
+        blogListing.setBackground(Color.WHITE);
     }
 
     public static void main(String args[]) {
@@ -404,24 +563,6 @@ public class PersonalBlog extends javax.swing.JFrame {
         cs.anchor = anchor;
         cs.weightx = 1;
         return rtn;
-    }
-
-    private WindowAdapter getWindowAdapter() {
-
-        return new WindowAdapter() {
-
-            @Override
-            public void windowClosing(WindowEvent we) {
-                super.windowClosing(we);
-                JOptionPane.showMessageDialog(PersonalBlog.this, "Can't exit");
-            }
-
-            @Override
-            public void windowIconified(WindowEvent we) {
-                PersonalBlog.this.setState(PersonalBlog.this.NORMAL);
-                JOptionPane.showMessageDialog(PersonalBlog.this, "Can't minimize");
-            }
-        };
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

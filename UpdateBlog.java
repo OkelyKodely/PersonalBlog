@@ -3,12 +3,15 @@ package ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import data.Database;
+import java.sql.SQLException;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import data.Database;
-import java.sql.SQLException;
+import data.managers.UpdateBlogMgr;
+import data.managers.UpdateBlogSingleton;
+import javax.swing.JOptionPane;
 
 public class UpdateBlog extends javax.swing.JFrame {
 
@@ -29,13 +32,37 @@ public class UpdateBlog extends javax.swing.JFrame {
     }
     
     private void init() {
-        this.insertEmail.setText(this.email);
+        this.insertEmail.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UpdateBlogSingleton s = UpdateBlogSingleton.getInstance();
+                s.setInsertEmail(UpdateBlog.this.insertEmail);
+                s.setTitle(UpdateBlog.this.title);
+                new UpdateBlogMgr().getUpd();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         this.insertName.setText(this.title);
         this.insertPost.setText(this.entry);
         this.save.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(UpdateBlog.this.pers != null) {
+                if(UpdateBlog.this.pers != null && !UpdateBlog.this.insertEmail.getText().equals("")) {
                     try {
                         da = new Database();
                         String email;
@@ -52,6 +79,8 @@ public class UpdateBlog extends javax.swing.JFrame {
                         UpdateBlog.this.pers.sendMessage_ForClose("Updated my personal blog finished");
                         UpdateBlog.this.dispose();
                     } catch (SQLException sQLException) {}
+                } else {
+                    JOptionPane.showMessageDialog(null, "Steps 1 through 3 are missing something(s)");
                 }
             }
 

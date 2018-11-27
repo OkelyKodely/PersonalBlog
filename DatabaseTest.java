@@ -11,14 +11,14 @@ public class DatabaseTest {
             database.setDatabase("d89l9begjikklj");
 
 
-            ResultSet res = database.query("SELECT * FROM blog LIMIT 100");
+            ResultSet res = database.query("SELECT * FROM blog");
 
 
             try {
 
                 String val;
-                val = "id\temail\ttitle\tpost\ti"
-                        + "nputdate";
+                val = "\tid\temail\ttitle\tpost"
+                        + "\tinputdate";
                 System.out.println(val);
 
 

@@ -1,6 +1,8 @@
 package ui;
 
 import data.Database;
+import data.managers.UpdateBlogMgr;
+import data.managers.UpdateBlogSingleton;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -9,6 +11,7 @@ import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class InsertBlog extends javax.swing.JFrame {
 
@@ -23,10 +26,33 @@ public class InsertBlog extends javax.swing.JFrame {
     }
     
     private void init() {
+        this.insertEmail.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UpdateBlogSingleton.getInstance().setInsertEmail(InsertBlog.this.insertEmail);
+                new UpdateBlogMgr().getNew();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         this.post.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(InsertBlog.this.pers != null) {
+                if(InsertBlog.this.pers != null && !InsertBlog.this.insertEmail.getText().equals("")) {
                     try {
                         da = new Database();
                         String email;
@@ -42,6 +68,9 @@ public class InsertBlog extends javax.swing.JFrame {
                         InsertBlog.this.pers.sendMessage_ForClose("New entry to my personal blog finished");
                         InsertBlog.this.dispose();
                     } catch (SQLException sQLException) {}
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Steps 1 through 3 are missing something(s)");
                 }
             }
 
