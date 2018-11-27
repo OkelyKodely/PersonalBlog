@@ -3,6 +3,8 @@ package ui;
 import data.Database;
 import data.managers.UpdateBlogMgr;
 import data.managers.UpdateBlogSingleton;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -23,6 +25,8 @@ public class InsertBlog extends javax.swing.JFrame {
         this.pers = pers;
         initComponents();
         init();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     private void init() {

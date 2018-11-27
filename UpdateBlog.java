@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import data.managers.UpdateBlogMgr;
 import data.managers.UpdateBlogSingleton;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 public class UpdateBlog extends javax.swing.JFrame {
@@ -29,6 +31,8 @@ public class UpdateBlog extends javax.swing.JFrame {
         this.entry = entry;
         initComponents();
         init();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
     }
     
     private void init() {

@@ -7,19 +7,16 @@ import java.awt.event.MouseListener;
 import javax.swing.border.BevelBorder;
 import java.awt.Font;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.File;
 import java.awt.Image;
-import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
@@ -34,6 +31,7 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import ui.helpers.ButtonStyle1;
 
 public class PersonalBlog extends javax.swing.JFrame {
 
@@ -57,31 +55,12 @@ public class PersonalBlog extends javax.swing.JFrame {
     private JLabel emailSelected;
     
     private class JJList extends JList {
-        private JJList() {
-            MouseListener[] ml = getMouseListeners();
-            for (MouseListener l : ml)
-                removeMouseListener(l);
-            addMouseListener(new MouseAdapter()
-            {
-              @Override
-              public void mouseClicked(MouseEvent event)
-              {
-              }
-            });
-        }
+
         private JJList(DefaultListModel ll) {
             setModel(ll);
-            MouseListener[] ml = getMouseListeners();
-            for (MouseListener l : ml)
-                removeMouseListener(l);
-            addMouseListener(new MouseAdapter()
-            {
-              @Override
-              public void mouseClicked(MouseEvent event)
-              {
-              }
-            });
         }
+        private JJList() {}
+
     }
 
     public PersonalBlog() {
@@ -102,6 +81,9 @@ public class PersonalBlog extends javax.swing.JFrame {
     }
     
     private void setComponents() {
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        this.setTitle("Daniel Cho's Personal Blog ..");
         try {
             Image image = ImageIO.read(new File("bg.png"));
             this.ip = new ImagePanel(image);
@@ -115,18 +97,18 @@ public class PersonalBlog extends javax.swing.JFrame {
         this.ip.setLayout(null);
         titleSelected = new JLabel();
         titleSelected.setForeground(Color.lightGray);
-        titleSelected.setBounds(25, 280, 400, 50);
+        titleSelected.setBounds(25, 300, 400, 50);
         titleSelected.setFont(new Font("verdana", Font.BOLD, 12));
         this.ip.add(titleSelected);
 
         emailSelected = new JLabel();
         emailSelected.setForeground(Color.WHITE);
-        emailSelected.setBounds(245, 280, 400, 50);
+        emailSelected.setBounds(225, 300, 400, 50);
         emailSelected.setFont(new Font("arial", Font.ITALIC, 12));
         this.ip.add(emailSelected);
         header = new JLabel();
-        header.setForeground(Color.RED);
-        header.setBounds(20, 360, 400, 50);
+        header.setForeground(Color.LIGHT_GRAY);
+        header.setBounds(20, 399, 400, 50);
         header.setFont(new Font("arial", Font.BOLD, 36));
         header.setText("Personal Blog ..");
         this.ip.add(header);
@@ -139,75 +121,43 @@ public class PersonalBlog extends javax.swing.JFrame {
         entry.setLineWrap(true);
         entry.setBorder(new BevelBorder(BevelBorder.LOWERED));
         jScrollPane0 = new JScrollPane(entry);
-        jScrollPane0.setBounds(20, 70, 300, 200);
+        jScrollPane0.setBounds(20, 92, 300, 200);
         jScrollPane0.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         this.ip.add(jScrollPane0);
-        add = new JButton();
-        add.setForeground(Color.CYAN);
-        add.setBounds(20, 274, 70, 25);
-        add.setText("add");
-        add.setFont(new Font("helvetica", Font.BOLD, 11));
-        this.ip.add(add);
-        modify = new JButton();
-        modify.setForeground(Color.CYAN);
-        modify.setBounds(91, 274, 90, 25);
-        modify.setText("modify");
-        modify.setFont(new Font("helvetica", Font.BOLD, 11));
-        this.ip.add(modify);
-        leave = new JButton();
-        leave.setForeground(new Color(255, 255, 255));
-        leave.setBounds(10, 480, 860, 75);
-        leave.setFont(new Font("arial", Font.BOLD, 38));
-        leave.setText("Log Off");
-        leave.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                System.exit(0);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });
-        this.ip.add(leave);
+        ButtonStyle1 bh1 = new ButtonStyle1(this.ip);
+        bh1.setAddButton(add);
+        bh1.setModifyButton(modify);
+        bh1.setLeaveButton(leave);
+        Object[] obj = bh1.exec();
+        add = (JButton) obj[0];
+        modify = (JButton) obj[1];
+        leave = (JButton) obj[2];
         personall = new JLabel();
-        personall.setForeground(Color.RED);
+        personall.setForeground(Color.LIGHT_GRAY);
         personall.setFont(new Font("arial", Font.PLAIN, 20));
-        personall.setBounds(330, 70, 100, 25);
-        personall.setText("Personal");
+        personall.setBounds(330, 109, 100, 25);
+        personall.setText("Daniel");
         this.ip.add(personall);
         blogg = new JLabel();
-        blogg.setForeground(Color.RED);
+        blogg.setForeground(Color.LIGHT_GRAY);
         blogg.setFont(new Font("arial", Font.PLAIN, 20));
-        blogg.setBounds(420, 110, 100, 25);
-        blogg.setText("Blog");
+        blogg.setBounds(420, 149, 100, 25);
+        blogg.setText("Cho's");
         this.ip.add(blogg);
         personll = new JLabel();
-        personll.setForeground(Color.RED);
+        personll.setForeground(Color.LIGHT_GRAY);
         personll.setFont(new Font("arial", Font.PLAIN, 20));
-        personll.setBounds(330, 170, 100, 25);
+        personll.setBounds(330, 209, 100, 25);
         personll.setText("Personal");
         this.ip.add(personll);
         bogg = new JLabel();
-        bogg.setForeground(Color.RED);
+        bogg.setForeground(Color.LIGHT_GRAY);
         bogg.setFont(new Font("arial", Font.PLAIN, 20));
-        bogg.setBounds(420, 210, 100, 25);
+        bogg.setBounds(420, 249, 100, 25);
         bogg.setText("Blog ..");
         this.ip.add(bogg);
         inswingg = new JLabel();
-        inswingg.setForeground(Color.RED);
+        inswingg.setForeground(Color.LIGHT_GRAY);
         inswingg.setFont(new Font("arial", Font.PLAIN, 20));
         inswingg.setBounds(380, 120, 100, 25);
         inswingg.setText("");
@@ -224,7 +174,7 @@ public class PersonalBlog extends javax.swing.JFrame {
 
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) blogListing.getCellRenderer();
         renderer.setHorizontalAlignment(SwingConstants.LEFT);
-        blogListing.setBackground(Color.RED);
+        blogListing.setBackground(Color.LIGHT_GRAY);
         blogListing.setBounds(480, 70, 390, 400);
         this.ip.add(blogListing);
         blogListing.setEnabled(true);
@@ -238,7 +188,7 @@ public class PersonalBlog extends javax.swing.JFrame {
                 //System.out.println("JScrollBar's current value = " + scrollBar.getValue());
             }
         });
-        jScrollPane1.setBounds(480, 70, 390, 400);
+        jScrollPane1.setBounds(480, 92, 390, 390);
         this.ip.add(jScrollPane1);
     }
 
@@ -332,7 +282,7 @@ public class PersonalBlog extends javax.swing.JFrame {
     }
 
     public void db() {
-        ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
+        ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id DESC");
         DefaultListModel<String> listModel = new DefaultListModel<>();
         try {
             int i = 0;
@@ -352,7 +302,7 @@ public class PersonalBlog extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 try {
                     System.out.println(e.getX()+"");
-                    if(e.getX() > 230) {
+                    if(e.getX() > 250) {
                         blogListing.setModel(listModel);
                         System.out.println("Recoqnizedt, a button click...");
                         int index = blogListing.locationToIndex(e.getPoint());
@@ -361,7 +311,7 @@ public class PersonalBlog extends javax.swing.JFrame {
                         Database db = new Database();
                         db.command(sql);
                         try {
-                            ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
+                            ResultSet res = da.query("SELECT inputdate, title FROM blog ORDER BY id DESC");
                             DefaultListModel<String> listModel = new DefaultListModel<>();
                             try {
                                 int i = 0;
@@ -400,7 +350,7 @@ public class PersonalBlog extends javax.swing.JFrame {
                             JListCellRenderer r = new JListCellRenderer();
                             r.setRem(rem);
                             blogListing.setCellRenderer(r);
-                            blogListing.setForeground(Color.RED);
+                            blogListing.setForeground(Color.LIGHT_GRAY);
                             blogListing.setBackground(Color.WHITE);
                         } catch(Exception e0) {}
                         db.closeConnect();
@@ -475,7 +425,7 @@ public class PersonalBlog extends javax.swing.JFrame {
                         PersonalBlog.this.titleSelected.setText(res.getString("title"));
                         PersonalBlog.this.emailSelected.setText("|" + res.getString("email"));
 
-                        res = da.query("SELECT inputdate, title FROM blog ORDER BY id ASC");
+                        res = da.query("SELECT inputdate, title FROM blog ORDER BY id DESC");
                         DefaultListModel<String> listModel = new DefaultListModel<>();
                         try {
                             int i = 0;
@@ -489,7 +439,7 @@ public class PersonalBlog extends javax.swing.JFrame {
                         } catch(SQLException exc) {}
                         ip = getContentPanel(GridBagConstraints.WEST);
                         blogListing.setModel(listModel);
-                        blogListing.setForeground(Color.RED);
+                        blogListing.setForeground(Color.LIGHT_GRAY);
                         blogListing.setBackground(Color.WHITE);
                         
                     }

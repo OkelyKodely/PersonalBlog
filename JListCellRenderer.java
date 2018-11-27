@@ -3,16 +3,13 @@ package utils;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
@@ -127,12 +124,17 @@ public class JListCellRenderer extends JPanel implements ListCellRenderer {
             }
             String leftData      =  (String) value;
             left.setText(leftData);
-            left.setForeground(new Color(138, 138, 138));
+            left.setForeground(new Color(238, 238, 238));
             if(isSelected) {
-                left.setForeground(Color.RED);
+                left.setForeground(Color.CYAN);
             }
-            setBackground(new Color(13, 99, 54));
-            setForeground(Color.YELLOW);
+            setBackground(Color.BLACK);
+            image1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+            image2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+            image3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+            image4.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+            left.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+            this.rem[0].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
         } catch(Exception exce) {}
         return this;
     }
