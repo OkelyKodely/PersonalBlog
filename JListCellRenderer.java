@@ -15,9 +15,9 @@ import javax.swing.ListCellRenderer;
 
 public class JListCellRenderer extends JPanel implements ListCellRenderer {
 
-    private JLabel image1, image2, image3, image4, left;
+    private JButton rem;
 
-    private JButton[] rem;
+    private JLabel image1, image2, image3, image4, left;
 
     public JListCellRenderer() {
         image1    = new JLabel();
@@ -32,13 +32,15 @@ public class JListCellRenderer extends JPanel implements ListCellRenderer {
         add(left);
     }
     
-    public void setRem(JButton[] rem) {
+    public void setRem(JButton rem) {
         this.rem = rem;
     }
 
     public Component getListCellRendererComponent(JList list,Object value,int index,boolean isSelected,boolean cellHasFocus){
         try {
-            add(this.rem[0]);
+
+            add(this.rem);
+
             String v = index + "";
             String v1 = "", v2 = "", v3 = "", v4 = "";
             if(index > -1) {
@@ -122,20 +124,25 @@ public class JListCellRenderer extends JPanel implements ListCellRenderer {
                 if(wasNull)
                     add(image4);
             }
-            String leftData      =  (String) value;
+            String leftData = (String) value;
             left.setText(leftData);
             left.setForeground(new Color(238, 238, 238));
-            if(isSelected) {
+            if( isSelected ){
                 left.setForeground(Color.CYAN);
             }
+            
             setBackground(Color.BLACK);
             image1.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
             image2.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
             image3.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
             image4.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
             left.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
-            this.rem[0].setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
-        } catch(Exception exce) {}
+            this.rem.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0,Color.BLACK));
+
+        } catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
         return this;
     }
 }

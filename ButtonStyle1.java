@@ -23,28 +23,20 @@ public class ButtonStyle1 {
         add.setText("add");
         add.setFont(new Font("helvetica", Font.ITALIC, 11));
         add.addMouseListener(new MouseListener() {
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 add.setForeground(Color.BLACK);
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 add.setForeground(Color.GREEN);
             }
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
         this.pane.add(add);
         modify = new JButton();
@@ -53,28 +45,20 @@ public class ButtonStyle1 {
         modify.setText("modify");
         modify.setFont(new Font("helvetica", Font.ITALIC, 11));
         modify.addMouseListener(new MouseListener() {
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 modify.setForeground(Color.BLACK);
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 modify.setForeground(Color.GREEN);
             }
+            @Override
+            public void mouseClicked(MouseEvent e) {}
+            @Override
+            public void mousePressed(MouseEvent e) {}
+            @Override
+            public void mouseReleased(MouseEvent e) {}
         });
         this.pane.add(modify);
         leave = new JButton();
@@ -84,27 +68,20 @@ public class ButtonStyle1 {
         leave.setFont(new Font("arial", Font.BOLD, 38));
         leave.setText("Log Off");
         leave.addMouseListener(new MouseListener() {
-
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                leave.setBackground(new Color(31, 51, 31));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                leave.setBackground(Color.LIGHT_GRAY);
+            }
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.exit(0);
             }
-
             @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                leave.setBackground(new Color(31, 51, 31));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                leave.setBackground(Color.LIGHT_GRAY);
-            }
+            public void mouseReleased(MouseEvent e) {}
         });
         this.pane.add(leave);
         

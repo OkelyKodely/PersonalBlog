@@ -6,15 +6,15 @@ public class UpdateBlogSingleton {
  
     private String title;
     private JTextField insertEmail;
-    private static UpdateBlogSingleton tit;
+    private static UpdateBlogSingleton singl;
     
     private UpdateBlogSingleton() {}
     
     public static UpdateBlogSingleton getInstance() {
-        if(null == tit) {
-            tit = new UpdateBlogSingleton();
+        if(singl == null) {
+            singl = new UpdateBlogSingleton();
         }
-        return tit;
+        return singl;
     }
 
     public String getTitle() {

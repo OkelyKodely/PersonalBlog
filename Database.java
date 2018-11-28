@@ -39,7 +39,8 @@ public class Database {
             Connection connection = DriverManager.getConnection(url, userName, password);
             return connection;
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "No Internet");
+            JOptionPane.
+                    showMessageDialog(null, "No Internet");
         }
         return null;
     }
@@ -62,9 +63,8 @@ public class Database {
     public void command(String sql) {
         try {
             Statement stat = this.con.createStatement();
-            String sequel;
-            sequel = sql;
-            stat.execute(sequel);
+            String sQl = sql;
+            stat.execute(sQl);
         } catch(SQLException exce) {}
     }
     
@@ -79,7 +79,6 @@ public class Database {
             }
             return this.con.isClosed();
         } catch(SQLException e) {}
-        boolean IS_CLOSED = true;
         return true;
     }
 

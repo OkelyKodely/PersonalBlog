@@ -50,7 +50,7 @@ public class UpdateBlogMgr {
                     ResultSet res1 = db.query(sql1);
                     if(res1.next()) {
                         String sql2 = "SELECT email FROM blog_signup WHERE email = '" + username.getText() + "'"
-                                + " AND password = '" + password.getText() + "'";
+                                + " AND password = '" + password.getSelectedText() + "'";
                         ResultSet res2 = db.query(sql2);
                         if(res2.next()) {
                             UpdateBlogSingleton.getInstance().getInsertEmail().setText(res2.getString("email"));
@@ -60,22 +60,14 @@ public class UpdateBlogMgr {
                     }
                 } catch(SQLException exce) {}
             }
-
             @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
+            public void mouseReleased(MouseEvent e) {}
             @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
+            public void mouseEntered(MouseEvent e) {}
             @Override
-            public void mouseExited(MouseEvent e) {
-            }
+            public void mouseExited(MouseEvent e) {}
         });
     }
 
@@ -121,22 +113,14 @@ public class UpdateBlogMgr {
                     }
                 } catch(SQLException exce) {}
             }
-
             @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
+            public void mouseReleased(MouseEvent e) {}
             @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
+            public void mouseEntered(MouseEvent e) {}
             @Override
-            public void mouseExited(MouseEvent e) {
-            }
+            public void mouseExited(MouseEvent e) {}
         });
     }
 }

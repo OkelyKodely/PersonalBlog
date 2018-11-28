@@ -44,22 +44,14 @@ public class UpdateBlog extends javax.swing.JFrame {
                 s.setTitle(UpdateBlog.this.title);
                 new UpdateBlogMgr().getUpd();
             }
-
             @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
+            public void mousePressed(MouseEvent e) {}
             @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
+            public void mouseReleased(MouseEvent e) {}
             @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
+            public void mouseEntered(MouseEvent e) {}
             @Override
-            public void mouseExited(MouseEvent e) {
-            }
+            public void mouseExited(MouseEvent e) {}
         });
         this.insertName.setText(this.title);
         this.insertPost.setText(this.entry);
@@ -87,13 +79,13 @@ public class UpdateBlog extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Steps 1 through 3 are missing something(s)");
                 }
             }
-
+            @Override
             public void mousePressed(MouseEvent e) {}
-
+            @Override
             public void mouseReleased(MouseEvent e) {}
-
+            @Override
             public void mouseEntered(MouseEvent e) {}
-
+            @Override
             public void mouseExited(MouseEvent e) {}
         });
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
